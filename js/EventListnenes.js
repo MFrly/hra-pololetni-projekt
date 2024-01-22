@@ -1,7 +1,10 @@
+// Event listener pro stisknutí klávesy
 window.addEventListener('keydown', (event) => {
+     // Kontrola, zda není blokován vstup hráče
     if (player.preventInput)return
     switch (event.key) {
         case 'w':
+              // Kontrola kolizí s dveřmi
             for (let i = 0; i < doors.length; i++){
                 const door = doors[i]
 
@@ -18,6 +21,7 @@ window.addEventListener('keydown', (event) => {
                         return
                      }
             }
+              // Nastavení vertikální rychlosti pro skok
             if (player.velocity.y ===0)player.velocity.y = -20
         
             break
