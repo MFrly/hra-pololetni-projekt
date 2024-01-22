@@ -1,4 +1,6 @@
+// Definice třídy pro sprite
 class Sprite {
+    //konstroktor s několika různými parametry (pozice, zdroj obrázku, počet snímků atd.)
     constructor({position, imageSrc, frameRate = 1, animations, frameBuffer = 2, loop = true, autoplay = true}){
         this.position = position
         this.image = new Image()
@@ -18,6 +20,7 @@ class Sprite {
         this.autoplay = autoplay
         this.currentAnimation
 
+         // Načtení obrázků pro animace
         if(this.animations){
             for (let key in this.animations){
                 const image = new Image()
@@ -27,8 +30,11 @@ class Sprite {
             
         }
     }
+
+    // Vykreslení sprite na canvas
     draw(){
         if(!this.loaded)return
+          // Definice oblasti (cropbox) pro aktuální frame
         const cropbox = {
             position:{
                 x: this.width * this.currentFrame,
@@ -37,6 +43,7 @@ class Sprite {
             width: this.width,
             height: this.height,
         }
+          // Vykreslení na canvas
         c.drawImage(
             this.image,
                 cropbox.position.x,
@@ -49,21 +56,27 @@ class Sprite {
                 this.width,
                 this.height
                   )
+                  // Aktualizace framu
                   this.updateFrames()
     }
     
 
+     // Spuštění animace
     play(){
         this.autoplay = true
     }
 
+    // Aktualizace framu animace
     updateFrames(){
         if(!this.autoplay) return
         this.elapsedFrames++
 
+        
+        // Podmínky pro aktualizaci framu
         if (this.elapsedFrames % this.frameBuffer ===0){
         if(this.currentFrame < this.frameRate - 1) this.currentFrame++
             else if(this.loop) this.currentFrame = 0}
+             // Kontrola dokončení animace a volání onComplete funkce
             if (this.currentAnimation?.onComplete){
                 if(this.currentFrame ===this.frameRate - 1 && !this.currentAnimation.isActive){
                     this.currentAnimation.onComplete()
