@@ -1,7 +1,9 @@
-    //vytvoření classy pro hráče
+//vytvoření classy pro hráče, rozšiřující třídu Sprite
     class Player extends Sprite{
         constructor({collisionBlocks = [], imageSrc, frameRate, animations, loop}){
+              // Volání konstruktoru rodičovské třídy Sprite
             super({imageSrc, frameRate, animations, loop})
+             // Inicializace pozice a rychlosti hráče
             this.position = {
                 x:200,
                 y:200,
@@ -11,6 +13,7 @@
                 y:0,
             }
 
+             // Inicializace různých vlastností hráče
             this.sides = {
                 bottom: this.position.y + this.height
             }
@@ -20,7 +23,7 @@
             
         }
 
-        //přidaní update pro updaty classy
+        // Přidání update classy pro aktualizaci stavu hráče    
         update(){
             /*
             pozadí postavy
@@ -45,6 +48,7 @@
 
         }
 
+         // Přidání classy pro zpracování vstupů od hráče
         handleInput(keys){
             if(this.preventInput)return
             this.velocity.x = 0
@@ -64,6 +68,7 @@
             }
         }
 
+        // Pro změnu aktuálního sprite
         switchSprite(name){
             if (this.image === this.animations[name].image)return 
             this.currentFrame = 0
@@ -73,6 +78,9 @@
             this.loop = this.animations[name].loop
             this.currentAnimation = this.animations[name]
         }
+
+
+        // Přidání classy pro aktualizaci hitboxu hráče
 
         updateHitbox(){
             this.hitbox = {
